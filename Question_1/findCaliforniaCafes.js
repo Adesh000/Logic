@@ -1,4 +1,4 @@
-const findCaliforniaCafes = () => {
+const findCaliforniaCafes = (str) => {
 
 
     //Cafes Array
@@ -95,6 +95,23 @@ const findCaliforniaCafes = () => {
             long: "119.41791",
         },
     ];
-
     
+    //merge the objects inside the array having same id's
+    const mergedArray = cafes.map(element => {
+        let otherInfo = places.find(obj => obj.id === element.place_id)
+        return {...element, ...otherInfo}
+    })
+
+    //delete id's from objects
+    for(let i=0; i<mergedArray.length; i++){
+        delete mergedArray[i].id;
+        delete mergedArray[i].place_id;
+    }
+
+    //filter the required array
+    let result = mergedArray.filter(item => item['name'].includes(str))
+    console.log(result);
 };
+
+
+findCaliforniaCafes('Cafe');
